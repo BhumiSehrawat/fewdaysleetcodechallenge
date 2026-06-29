@@ -1,7 +1,6 @@
 class Solution {
 public:
     bool search(vector<int>& nums, int target) {
-        sort(nums.begin(), nums.end());
         int s=0;
         int e=nums.size()-1;
         int mid=s+(e-s)/2;
@@ -9,18 +8,26 @@ public:
             if(nums[mid]==target){
                 return true;
             }
-            if(nums[s] == nums[mid] && nums[mid] == nums[e]) {
+            if(nums[s]==nums[mid] && nums[mid]==nums[e]){
                 s++;
                 e--;
             }
-            if(nums[mid]<target){
-                s=mid+1;
+            else if(nums[s]<=nums[mid]){
+                if(target>=nums[s] && target<nums[mid]){
+                    e=mid-1;
+                }else{
+                    s=mid+1;
+                }
             }else{
-                e=mid-1;
+                if(target>nums[mid] && target<=nums[e]){
+                    s=mid+1;
+                }else{
+                    e=mid-1;
+                }
             }
             mid=s+(e-s)/2;
         }
-        return 0;
+        return false;
         
     }
 };
